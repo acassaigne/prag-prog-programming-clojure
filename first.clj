@@ -135,3 +135,20 @@
 ;; call static method
 ;; (Class/method & args)
 (System/lineSeparator)
+
+
+;;;;;;;;;;;;;;;;;;
+;; Flow Control ;;
+;;;;;;;;;;;;;;;;;;
+
+(defn is-small [number]
+  (if (< number 5) "yes" "no"))
+
+;; cond multiples conditions
+
+(defn is-small-2 [number]
+  (cond
+    (> number 1000) "big"
+    (> number 500 ) "medium"
+    :else "small"))
+
