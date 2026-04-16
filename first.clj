@@ -152,3 +152,31 @@
     (> number 500 ) "medium"
     :else "small"))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Introduce Side Effect ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn is-small-side-effect [number]
+  (if (< number 5) "small"
+      (do (println "Saw a big number")
+          "big")))
+
+;;;;;;;;;;;;;;;;;;;
+;; curr and loop ;;
+;;;;;;;;;;;;;;;;;;;
+
+(loop [result [], x 5]
+  (if (zero? x)
+    result
+    (recur (conj result x) (dec x))))
+
+(defn countdown [result x]
+  (if (zero? x)
+    result
+    (recur (conj result x) (dec x))))
+
+(defn countdown-2 [n]
+(loop [result [] x n]
+  (if (zero? x)
+    result
+    (recur (conj result x) (dec x)))))
