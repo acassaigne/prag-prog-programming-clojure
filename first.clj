@@ -42,7 +42,10 @@
 
 (def hello-greeting (make-greeter "Hello"))
 
-;; (let [bindings*] exprs*)
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+ ;; LET and Binding             ;;
+ ;; (let [bindings*] exprs*)    ;;
+ ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn square-corners [top left size]
   (let [right (+ left size)
@@ -89,5 +92,46 @@
 
 
   
-;; namespace & import java
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; namespace & import java ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (import [java.io InputStream File])
+
+(.exists (File. "/tmp"))
+
+
+;; (ns myapp                               ;;
+;;   (:import [java.io InputStream File])) ;;
+
+;; for using clojure split function inside clojure.string
+(require '[clojure.string :refer [split]])
+(split "My first sentence" #"\s+")
+
+;; if you want get all function with a prefix
+(require '[clojure.string :as str])
+
+;; declare namespace with import and require
+;; (ns examples.exploring
+;;   (:require [clojure.string :as str])
+;;   (:import [java.io File]))
+
+;;;;;;;;;;;;;;;;;;
+;; calling Java ;;
+;;;;;;;;;;;;;;;;;;
+
+(new java.util.Random)
+(java.util.Random.) ;; shortcut for (new...)
+
+(def rnd (new java.util.Random))
+
+;; use the qualified constructor new
+(map java.io.File/new ["a.txt" "b.txt"])
+
+;; call method here on rnd def
+(.nextInt rnd 10)
+;; same thing with field
+
+;; call static method
+;; (Class/method & args)
+(System/lineSeparator)
