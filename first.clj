@@ -1,5 +1,6 @@
+
 (defn hello [name] 
- (str "Hello, " name))
+  (str "Hello, " name))
 
 
 ;; different arity for a function
@@ -70,7 +71,10 @@
 
 (let [[_ _ z] [1 2 3]] z)
 
+;; destructuring less than present values
 
+(let [[x y :as coords] [1 2 3 4 5 6]]
+  (str "value of x=" x " value of y=" y " just 2 values of " (count coords) " counted"))
 
 
 
