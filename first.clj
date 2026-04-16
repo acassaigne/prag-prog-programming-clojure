@@ -76,5 +76,18 @@
 (let [[x y :as coords] [1 2 3 4 5 6]]
   (str "value of x=" x " value of y=" y " just 2 values of " (count coords) " counted"))
 
+(require '[clojure.string :as str])
+
+(defn ellipsize [words]
+  (let [[w1 w2 w3] (str/split words #"s+")]
+    (str/join " " [w1 w2 w3 "..."])))
+
+  
+(ellipsize "Hello you trying ellipsize")
+
+;;(println "Success")
 
 
+  
+;; namespace & import java
+(import [java.io InputStream File])
