@@ -200,3 +200,15 @@
 ;;         return -1;
 ;;     }
 ;; rewrite it in clojure
+
+;; get index and value from vector with `map-indexed`
+
+(map-indexed vector "Hello")
+
+;; return ([0 \H] [1 \e] [2 \l] [3 \l] [4 \o])
+
+(defn try-loop []
+  (for [ val ["a" "b" "c"] ] val ))  
+
+;; comprehension loop with filtering
+;;  (for [letter ["a" "b" "a" "b" "z"] :when (= letter "a") ] letter)
