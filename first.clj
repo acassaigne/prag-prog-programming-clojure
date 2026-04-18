@@ -204,11 +204,18 @@
 ;; get index and value from vector with `map-indexed`
 
 (map-indexed vector "Hello")
-
 ;; return ([0 \H] [1 \e] [2 \l] [3 \l] [4 \o])
 
 (defn try-loop []
   (for [ val ["a" "b" "c"] ] val ))  
 
-;; comprehension loop with filtering
+;; comprehension loop with filtering on character a
 ;;  (for [letter ["a" "b" "a" "b" "z"] :when (= letter "a") ] letter)
+
+(defn indexed [coll] (map-indexed vector coll))
+
+(defn index-filter [search-chars coll]
+  (for [[idx val] (indexed coll) :when (search-chars val)] idx))
+
+(defn index-of-any [search-set-chars coll]
+  (first (index-filter search-set-chars coll)))
