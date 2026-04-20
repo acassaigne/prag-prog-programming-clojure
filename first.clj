@@ -269,3 +269,51 @@
 
 (seq ()) ;; return nil
 (seq []) ;; return nil
+
+;; we can consider map as seq too
+(first {:fname "Aaron" :lname "Bedra"})
+(rest {:fname "Aaron" :lname "Bedra"})
+(cons [:mname "James"] {:fname "Aaron" :lname "Bedra"})
+
+(def my-map {:c "c" :b "b" :a "a"})
+
+ (into (sorted-map) my-map)
+(sorted-map :b "b" :a "a")
+
+;;;;;;;;;;;;;;;;;;;;;
+;; Create sequence ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+(def end-range 10)
+(def start-range 1)
+
+(range end-range)
+
+(range start-range end-range)
+(range start-range end-range 2)
+
+(repeat 5 \a)
+
+;; (iterate my-function start-value)
+
+(take 10 (iterate inc 1))
+
+(take 10 (cycle ["a" "b"]))
+
+(interleave [1 2 3] ["a" "b" "c" "d"])
+
+(def my-separator ",")
+(interpose my-separator ["apples" "bananas" "grapes"])
+
+(apply str (interpose my-separator ["apples" "bananas" "grapes"]) )
+
+;; equivalent to join
+(require '[clojure.string :refer [join]])
+
+(join \, ["apples" "bananas" "grapes"])
+
+;; exist function to create vec, set, hash-set
+
+(set [1 2 3])
+(hash-set 1 2 3)
+(vec (range 5))
