@@ -219,3 +219,53 @@
 
 (defn index-of-any [search-set-chars coll]
   (first (index-filter search-set-chars coll)))
+
+
+;;;;;;;;;;;;;;;;
+;; nampespace ;;
+;;;;;;;;;;;;;;;;
+
+
+;; (require 'my-app) ;; load the namespace
+;;(in-ns my-app) ;; change the namespace
+
+;; add lib and add it to classpath
+;; (add-lib 'org.clojure/core.cache {:mvn/version "1.1.234"})
+
+(add-lib 'org.clojure/core.cache)
+
+;; if you want add a new dependecy to your project, the right way to do that is
+;; {:deps {org.clojure/core.cache {:mvn/version "1.1.234"}}}
+
+;; (sync-deps)
+;; in this case the deps.edn file has been updated
+
+;; after add a dependency this last one can be use with require
+
+;; (require '[clojure.core.cache :as cache])
+
+;; At the heart of every Clojure program is your
+;; domain, represented as data, and a set of
+;; functions that manipulate that data.
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; CHAPITRE 4 : Unifying Data with Sequences ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; sequence is a logical consideration about vector, list, set and so on... it's not rely on specific implementation
+
+;; function working on seq
+
+(first [1 2 3])
+
+(rest [1 2 3])
+
+(cons 1 [2 3])
+
+(seq "abc")
+
+(seq [1 2 3])
+
+(seq ()) ;; return nil
+(seq []) ;; return nil
