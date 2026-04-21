@@ -339,3 +339,28 @@
 
 (split-with #(<= % 8) [1 2 3 4 5 6 7 8 9 10])
             
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Sequence Predicates ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn is-a [letter]
+  (= \a letter))
+
+(every? is-a )
+(every? is-a "aaa")
+
+(some is-a [\g \h \a \b])
+(some is-a [\g \h \b])
+
+;; some is not a predicat, combine with identity it's return the first true
+
+(some identity [nil false 4 "a"])
+(some identity [nil false 0 4 "a"])
+(not-every? is-a "ha bon?")
+(not-every? is-a "aaa")
+
+(not-any? is-a "Ha bon?")
+(not-any? is-a "Hello")
+
+
+
