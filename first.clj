@@ -317,3 +317,25 @@
 (set [1 2 3])
 (hash-set 1 2 3)
 (vec (range 5))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; filtering Sequences ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; (filter pred coll)
+
+(defn multiple-three [n]
+  (= (mod n 3) 0))
+
+(filter multiple-three [0 1 2 3 4 5 6])
+
+(def vowel? #{\a \i \e \o \u \y})
+(take-while vowel? "eeollo")
+
+(drop-while vowel? "eeollo")
+
+(split-at 4 (range 6))
+(split-at 4 [1 2 3 4 5 6])
+
+(split-with #(<= % 8) [1 2 3 4 5 6 7 8 9 10])
+            
