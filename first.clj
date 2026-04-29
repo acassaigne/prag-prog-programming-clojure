@@ -318,6 +318,11 @@
 (hash-set 1 2 3)
 (vec (range 5))
 
+
+(def whole-numbers (iterate inc 1))
+
+(take 5 whole-numbers)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; filtering Sequences ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -346,7 +351,7 @@
 (defn is-a [letter]
   (= \a letter))
 
-(every? is-a )
+(every? is-a "bb")
 (every? is-a "aaa")
 
 (some is-a [\g \h \a \b])
@@ -363,4 +368,142 @@
 (not-any? is-a "Hello")
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Transforming sequence ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(map #(format "<%s>" %) ["une" "valeur" "entre" "diamant" "signes"])
+
+;; map with multiples collections
+(map #(format "%s - %s" %1 %2) ["a" "b" "c"] ["one" "two" "three"])
+
+
+;; (reduce f val? coll)
+(reduce + 0 (range 1 11))
+(sort [42 1 7 11])
+(sort > [42 1 7 11])
+
+(sort-by str [42 1 7 11])
+(sort-by :grade > [{:grade 83} {:grade 90} {:grade 77}])
+
+;; for list comprehension
+
+
+;; (for [binding-form coll-expr filter-expr? ...] expr)
+
+(for [ word ["on" "two" "three"]] (format "<%s>" word))
+
+(for [ word ["on" "two" "three"] number [1 2 3]] (format "%d - %s" number word))
+
+
+(for [letter "ha ah bon he beee vas-y" :when (is-a letter)] letter)
+(for [letter "aaa b aa" :while (is-a letter)] letter)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Threadind functions ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(reduce + (map #(* % %) (filter odd? (range 100))))
+
+
+(->> (range 100) (filter odd?) (map #(* % %)) (reduce +))
+
+(->> '("one" "two" "three")
+     (map #(format "<%s>" %1))
+     (map #(format "%d - %s" %1 %2) [1 2 3])
+     )
+
+(defn format-with-number [[n s]]
+  (format "%d - %s" n s))
+
+(->> '("one" "two" "three")
+     (map #(format "<%s>" %1))
+     (map-indexed vector)
+     (map format-with-number)
+     )
+
+
+(defn my-test []
+  (def x "test")
+  (println x))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; TODO project fonction sur les map set ;;
+;; ;; page 87 to 95                         ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Fibonacci
+;; F(0) = 0
+;; F(1) = 1
+;; F(n) = F(n-1) + F(n-2)
+
+(defn stack-consuming-fibo [n]
+  (cond
+    (= n 0) 0
+    (= n 1) 1
+    :else (+ (stack-consuming-fibo (- n 1))
+             (stack-consuming-fibo (- n 2)))))
+
+(defn tail-fibo [n]
+  (letfn [(fib
+            [current next n]
+            (if (zero? n)
+              current
+              (fib next (+ current next) (dec n))))]
+    (fib 0N 1N n)))
+
+(defn recur-fibo [n]
+  (letfn [(fib
+            [current next n]
+            (if (zero? n)
+              current
+              (recur next (+ current next) (dec n))))]
+    (fib 0N 1N n)))
+
+(defn lazy-seq-fibo 
+  ([] (concat [0 1] (lazy-seq-fibo 0N 1N)))
+  ([a b]
+   (let [n (+ a b)]
+     (lazy-seq (cons n (lazy-seq-fibo b n))))))
+
+
+;;(take 10 (lazy-seq-fibo))
+
+;; limit repl
+;; (set! *print-length* 10)
+
+
+;;;;;;;;;;;;;;;;;;;;;;
+;; Lazier Than Lazy ;;
+;;;;;;;;;;;;;;;;;;;;;;
+
+;; WIP pg 113
+
+;; problem pair of :h :h toss head
+;; [:h :h :h :t :h] => answerd 2
+;; [:h :t :h :t :h] => answerd 0
+
+
+(defn count-heads-pairs [coll]
+  (loop [cnt 0 coll coll]
+    (if (empty? coll)
+      cnt
+      (recur (if (= :h (first coll) (second coll)) 
+               (inc cnt)
+               cnt) (rest coll))
+      )))
+
+
+(defn inc-when-matching-heads [cnt coll]
+  (if (= :h (first coll) (second coll))
+    (inc cnt)
+    cnt))
+
+(defn count-heads-pairs-2 [coll]
+  (loop [cnt 0 coll coll]
+    (if (empty? coll)
+      cnt
+      (recur (inc-when-matching-heads cnt coll) (rest coll))
+      )))
