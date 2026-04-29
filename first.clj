@@ -507,3 +507,10 @@
       cnt
       (recur (inc-when-matching-heads cnt coll) (rest coll))
       )))
+
+
+(defn is-head-pair? [pair]
+  (= :h (first pair) (second pair)))
+
+(defn count-heads-pairs-3 [coll]
+  (->> (partition 2 1 coll) (filter is-head-pair?) (count) ))
