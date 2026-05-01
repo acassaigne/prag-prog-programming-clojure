@@ -1,28 +1,25 @@
 
-(defn hello [name] 
+(defn hello [name]
   (str "Hello, " name))
-
 
 ;; different arity for a function
 
 (defn greeting
- "this a documentation"
- ([] (greeting "world"))
- ([username] (str "Hello, " username))
- )
+  "this a documentation"
+  ([] (greeting "world"))
+  ([username] (str "Hello, " username)))
 
 (defn date [person-1 person-2 & chaperones]
- (println person-1 "and" person-2
-  "went out with" (count chaperones) "chaperones."))
+  (println person-1 "and" person-2
+           "went out with" (count chaperones) "chaperones."))
 
 (use '[clojure.string :as str :only (join split)])
 
 (defn indexable-word? [word]
- (> (count word) 2) )
+  (> (count word) 2))
 
 (defn my-filter [phrase]
- (filter indexable-word? (str/split phrase #"\W+")))
-
+  (filter indexable-word? (str/split phrase #"\W+")))
 
 ;;(filter (fn [w] (> (count w) 2)) (str/split "hello to you" #"\W"))
 
@@ -30,15 +27,13 @@
 
 (defn indexable-words [text]
   (let [indexable-word? (fn [w] (> (count w) 2))]
-    (filter indexable-word? (str/split text #"\W+")))
-  )
-
+    (filter indexable-word? (str/split text #"\W+"))))
 
 ;; create dynamicalyy a function
 (defn make-greeter [greeting-prefix]
   (fn [username] (str greeting-prefix ", " username)))
 
- ((make-greeter "Hello") "you")
+((make-greeter "Hello") "you")
 
 (def hello-greeting (make-greeter "Hello"))
 
@@ -50,8 +45,7 @@
 (defn square-corners [top left size]
   (let [right (+ left size)
         bottom (+ top size)]
-    [[bottom left] [top left] [top right] [bottom right]])
-  )
+    [[bottom left] [top left] [top right] [bottom right]]))
 
 ;; destructuring
 
@@ -85,13 +79,10 @@
   (let [[w1 w2 w3] (str/split words #"s+")]
     (str/join " " [w1 w2 w3 "..."])))
 
-  
 (ellipsize "Hello you trying ellipsize")
 
 ;;(println "Success")
 
-
-  
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; namespace & import java ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -99,7 +90,6 @@
 (import [java.io InputStream File])
 
 (.exists (File. "/tmp"))
-
 
 ;; (ns myapp                               ;;
 ;;   (:import [java.io InputStream File])) ;;
@@ -136,7 +126,6 @@
 ;; (Class/method & args)
 (System/lineSeparator)
 
-
 ;;;;;;;;;;;;;;;;;;
 ;; Flow Control ;;
 ;;;;;;;;;;;;;;;;;;
@@ -149,7 +138,7 @@
 (defn is-small-2 [number]
   (cond
     (> number 1000) "big"
-    (> number 500 ) "medium"
+    (> number 500) "medium"
     :else "small"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -176,10 +165,10 @@
     (recur (conj result x) (dec x))))
 
 (defn countdown-2 [n]
-(loop [result [] x n]
-  (if (zero? x)
-    result
-    (recur (conj result x) (dec x)))))
+  (loop [result [] x n]
+    (if (zero? x)
+      result
+      (recur (conj result x) (dec x)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Where's My for Loop? ;;
@@ -207,7 +196,7 @@
 ;; return ([0 \H] [1 \e] [2 \l] [3 \l] [4 \o])
 
 (defn try-loop []
-  (for [ val ["a" "b" "c"] ] val ))  
+  (for [val ["a" "b" "c"]] val))
 
 ;; comprehension loop with filtering on character a
 ;;  (for [letter ["a" "b" "a" "b" "z"] :when (= letter "a") ] letter)
@@ -220,11 +209,9 @@
 (defn index-of-any [search-set-chars coll]
   (first (index-filter search-set-chars coll)))
 
-
 ;;;;;;;;;;;;;;;;
 ;; nampespace ;;
 ;;;;;;;;;;;;;;;;
-
 
 ;; (require 'my-app) ;; load the namespace
 ;;(in-ns my-app) ;; change the namespace
@@ -247,7 +234,6 @@
 ;; At the heart of every Clojure program is your
 ;; domain, represented as data, and a set of
 ;; functions that manipulate that data.
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; CHAPITRE 4 : Unifying Data with Sequences ;;
@@ -277,7 +263,7 @@
 
 (def my-map {:c "c" :b "b" :a "a"})
 
- (into (sorted-map) my-map)
+(into (sorted-map) my-map)
 (sorted-map :b "b" :a "a")
 
 ;;;;;;;;;;;;;;;;;;;;;
@@ -305,7 +291,7 @@
 (def my-separator ",")
 (interpose my-separator ["apples" "bananas" "grapes"])
 
-(apply str (interpose my-separator ["apples" "bananas" "grapes"]) )
+(apply str (interpose my-separator ["apples" "bananas" "grapes"]))
 
 ;; equivalent to join
 (require '[clojure.string :refer [join]])
@@ -317,7 +303,6 @@
 (set [1 2 3])
 (hash-set 1 2 3)
 (vec (range 5))
-
 
 (def whole-numbers (iterate inc 1))
 
@@ -343,7 +328,7 @@
 (split-at 4 [1 2 3 4 5 6])
 
 (split-with #(<= % 8) [1 2 3 4 5 6 7 8 9 10])
-            
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Sequence Predicates ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -367,7 +352,6 @@
 (not-any? is-a "Ha bon?")
 (not-any? is-a "Hello")
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Transforming sequence ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -376,7 +360,6 @@
 
 ;; map with multiples collections
 (map #(format "%s - %s" %1 %2) ["a" "b" "c"] ["one" "two" "three"])
-
 
 ;; (reduce f val? coll)
 (reduce + 0 (range 1 11))
@@ -388,13 +371,11 @@
 
 ;; for list comprehension
 
-
 ;; (for [binding-form coll-expr filter-expr? ...] expr)
 
-(for [ word ["on" "two" "three"]] (format "<%s>" word))
+(for [word ["on" "two" "three"]] (format "<%s>" word))
 
-(for [ word ["on" "two" "three"] number [1 2 3]] (format "%d - %s" number word))
-
+(for [word ["on" "two" "three"] number [1 2 3]] (format "%d - %s" number word))
 
 (for [letter "ha ah bon he beee vas-y" :when (is-a letter)] letter)
 (for [letter "aaa b aa" :while (is-a letter)] letter)
@@ -405,13 +386,11 @@
 
 (reduce + (map #(* % %) (filter odd? (range 100))))
 
-
 (->> (range 100) (filter odd?) (map #(* % %)) (reduce +))
 
 (->> '("one" "two" "three")
      (map #(format "<%s>" %1))
-     (map #(format "%d - %s" %1 %2) [1 2 3])
-     )
+     (map #(format "%d - %s" %1 %2) [1 2 3]))
 
 (defn format-with-number [[n s]]
   (format "%d - %s" n s))
@@ -419,15 +398,11 @@
 (->> '("one" "two" "three")
      (map #(format "<%s>" %1))
      (map-indexed vector)
-     (map format-with-number)
-     )
-
+     (map format-with-number))
 
 (defn my-test []
   (def x "test")
   (println x))
-
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; TODO project fonction sur les map set ;;
@@ -462,18 +437,16 @@
               (recur next (+ current next) (dec n))))]
     (fib 0N 1N n)))
 
-(defn lazy-seq-fibo 
+(defn lazy-seq-fibo
   ([] (concat [0 1] (lazy-seq-fibo 0N 1N)))
   ([a b]
    (let [n (+ a b)]
      (lazy-seq (cons n (lazy-seq-fibo b n))))))
 
-
 ;;(take 10 (lazy-seq-fibo))
 
 ;; limit repl
 ;; (set! *print-length* 10)
-
 
 ;;;;;;;;;;;;;;;;;;;;;;
 ;; Lazier Than Lazy ;;
@@ -485,16 +458,13 @@
 ;; [:h :h :h :t :h] => answerd 2
 ;; [:h :t :h :t :h] => answerd 0
 
-
 (defn count-heads-pairs [coll]
   (loop [cnt 0 coll coll]
     (if (empty? coll)
       cnt
-      (recur (if (= :h (first coll) (second coll)) 
+      (recur (if (= :h (first coll) (second coll))
                (inc cnt)
-               cnt) (rest coll))
-      )))
-
+               cnt) (rest coll)))))
 
 (defn inc-when-matching-heads [cnt coll]
   (if (= :h (first coll) (second coll))
@@ -505,12 +475,25 @@
   (loop [cnt 0 coll coll]
     (if (empty? coll)
       cnt
-      (recur (inc-when-matching-heads cnt coll) (rest coll))
-      )))
-
+      (recur (inc-when-matching-heads cnt coll) (rest coll)))))
 
 (defn is-head-pair? [pair]
   (= :h (first pair) (second pair)))
 
 (defn count-heads-pairs-3 [coll]
-  (->> (partition 2 1 coll) (filter is-head-pair?) (count) ))
+  (->> (partition 2 1 coll) (filter is-head-pair?) (count)))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; other trampoline for combine recursion A call B and B call A ;;
+;; ;; optimize recursion with Memoization                          ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ;; earger transformation ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;; Transducer optimize
