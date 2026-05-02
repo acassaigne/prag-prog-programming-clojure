@@ -483,17 +483,35 @@
 (defn count-heads-pairs-3 [coll]
   (->> (partition 2 1 coll) (filter is-head-pair?) (count)))
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; other trampoline for combine recursion A call B and B call A ;;
 ;; ;; optimize recursion with Memoization                          ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ;; earger transformation ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;  Transducer optimize ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; Transducer optimize
+(defn count-heads-pairs-transducer-4 [collection]
+  (let [part (partition 2 1 collection)]
+    (count (into [] (filter is-head-pair?)
+                 part))))
+
+(defn preds []
+  (into []
+        (comp
+         (map ns-publics)
+         (mapcat vals)
+         (filter #(clojure.string/ends-with? % "?"))
+         (map #(str (.-sym %))))
+        (all-ns)))
+
+(defn a [coll]
+  (into []
+        (comp (filter #(= 3 %))
+              (map  #(+ 1 %)))
+        coll))
